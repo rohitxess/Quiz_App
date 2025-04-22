@@ -1,12 +1,21 @@
+import http from http;
 import { Server } from "socket.io";
-const io = new Server(server);
+import { IoManager } from "./managers/IoManager";
+const server = http.createServer();
+
+const io = IoManager.getIo();
 io.listen(3000);
 
+io.on('connection', (client) => {
+  client.on('event', data => {
+    const type = data.type;
+    // catch 3 admin events 
+    // 2 clients events 
+    // userManager => QuizManager => Quiz => broadcast
+  });
 
-const server = require('http').createServer();
-const io = require('socket.io')(server);
-io.on('connection', client => {
-  client.on('event', data => { /* … */ });
-  client.on('disconnect', () => { /* … */ });
+  client.on('disconnet', () => {
+
+  });
 });
-server.listen(3000);
+
