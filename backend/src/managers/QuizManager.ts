@@ -1,4 +1,5 @@
 import { IoManager } from "./IoManager";
+import { AllowedSubmissions } from "./Quiz";
 
 
 export class QuizManager {
@@ -17,4 +18,22 @@ export class QuizManager {
         const io = IoManager.getIo();
         
     }
+
+    public addProblem(roomId: string, problem: {
+        title: string;
+        description: string;
+        image: string;
+        options: {
+            id: number;
+            title: string;
+        }[]; // this is array of objects
+        answer: AllowedSubmissions;
+    }) {
+        const quiz = this.getQuiz(roomId);
+        if(!quiz){
+
+        }
+
+    }
+
 }
