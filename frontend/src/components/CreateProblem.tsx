@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { use, useState } from "react";
 
-export const CreateProblem = () => {
+export const CreateProblem = ({socket, roomId}: {socket: any; roomId: string}) => {
     const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [answer, setAnswer] = useState(0);
     const [options, setOptions] = useState([{
         id: 0, 
         title: ""
@@ -18,26 +20,48 @@ export const CreateProblem = () => {
 
     return <div>
         Create problem 
-        <input type="text" onChange={(e) => {
+       Title =  <input type="text" onChange={(e) => {
             setTitle(e.target.value)
-        }} />
+        }} ></input>
+        <br /><br />
 
-        {[1, 2, 3,4 ]}.map(optionId => <div>
+        Description - <input type="text" onClick={(e) => {
+            setDescription(e.target.value)
+        }}></input>
+        <br />
+
+        {[0, 1, 2, 3].map(optionId => <div>
+            <input type="radio" checked={optionId === answer} onChange={() => {
+                setAnswer(optionId)
+            }}> </input>
+            Option {optionId}
             <input type="text" onChange={(e) => {
-            setOptions(options => options.map(x => {
-                if (x.id === optionId) {
-                    return {
-                        ...x,
-                        title: e.target.value
+                 setOptions(options => options.map(x => {
+                    if (x.id === optionId) {
+                        return {
+                            ...x,
+                            title: e.target.value
+                        }
                     }
-                }
                 return x;
-            }))
-            }}/>
-            </div>)
-        
+                }))
+            }}> </input>
+            <br />
+            </div>)}
+
+            <button onClick={() => {
+                socket.emit("createProblem", {
+                    roomId, 
+                    problem: {
+                        title, 
+                        description, 
+                        options, 
+                        answer,
+                    }
+                });
+            }}>Add problem</button>
     </div>
 }
 
-// need to install the dependencies 
+// need to install the dependencies most probably "socket.io-client"
 
