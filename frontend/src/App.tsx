@@ -12,11 +12,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<User/>}>
         <Route path='admin' element={<Admin/>}></Route>
         <Route path='user' element={<User/>}></Route>
-        </Route>
-      </Routes>
+å      </Routes>
     </BrowserRouter>
   )
 }
